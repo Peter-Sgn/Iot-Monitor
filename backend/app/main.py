@@ -10,9 +10,13 @@ app = FastAPI(
     version="1.0.0",
 )
 
+origins = [settings.frontend_url]
+if settings.frontend_url_prod:
+    origins.append(settings.frontend_url_prod)
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[settings.frontend_url],
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
