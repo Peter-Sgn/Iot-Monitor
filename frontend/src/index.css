@@ -1,0 +1,41 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  /* Sidebar - toujours sombre */
+  --color-sidebar-bg: #0F172A;
+  --color-sidebar-active-bg: #1E293B;
+  --color-sidebar-text: #94A3B8;
+  --color-sidebar-text-active: #FFFFFF;
+
+  /* Accent - bleu, comme le logo et les liens de la maquette */
+  --color-brand-accent: #3B82F6;
+  --color-brand-accent-soft: #DBEAFE;
+
+  /* Statuts */
+  --color-status-success: #16A34A;
+  --color-status-success-bg: #DCFCE7;
+  --color-status-danger: #DC2626;
+  --color-status-danger-bg: #FEE2E2;
+  --color-status-warning: #D97706;
+  --color-status-warning-bg: #FEF3C7;
+
+  /* Fond clair (mode par defaut) */
+  --color-surface-light: #F8FAFC;
+  --color-card-light: #FFFFFF;
+  --color-border-light: #E2E8F0;
+  --color-text-light-primary: #0F172A;
+  --color-text-light-secondary: #64748B;
+
+  /* Fond sombre (mode toggle) */
+  --color-surface-dark: #0B0F0E;
+  --color-card-dark: #131917;
+  --color-border-dark: #1E2624;
+  --color-text-dark-primary: #EAF2EF;
+  --color-text-dark-secondary: #8CA39C;
+}
+
+body {
+  @apply bg-surface-light text-text-light-primary dark:bg-surface-dark dark:text-text-dark-primary;
+}

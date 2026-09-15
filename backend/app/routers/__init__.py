@@ -1,0 +1,1 @@
+from app.routers import health_router, auth_router, capteurs_router, mesures_router, dashboard_router, alertes_router
