@@ -32,3 +32,7 @@ def update_capteur(db: Session, capteur: Capteur, update_data: CapteurUpdate) ->
 def delete_capteur(db: Session, capteur: Capteur) -> None:
     db.delete(capteur)
     db.commit()
+
+def get_all_capteurs(db: Session) -> list[Capteur]:
+    """Liste TOUS les capteurs, tous comptes confondus — reserve au simulateur."""
+    return db.query(Capteur).all() 

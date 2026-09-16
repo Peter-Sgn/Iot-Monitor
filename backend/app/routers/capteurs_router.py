@@ -1,5 +1,6 @@
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, status, Header 
 from sqlalchemy.orm import Session
+from app.core.config import settings
 
 from app.core.dependencies import get_db
 from app.core.security import get_current_user
@@ -11,9 +12,21 @@ from app.services.capteur_service import (
     create_capteur,
     update_capteur,
     delete_capteur,
+    get_all_capteurs,
 )
 
 router = APIRouter(prefix="/capteurs", tags=["capteurs"])
+
+@router.get("/all", response_model=list[CapteurOut])
+def list_all_capteurs(x_api_key: str = Header(...)):
+    """
+    Liste tous les capteurs de tous les utilisateurs.
+    Reservee au simulateur, protegee par une cle technique (pas un compte utilisateur).
+    """
+    if x_api_key != settings.simulator_api_key:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Cle invalide")
+    db = next(get_db())
+    return get_all_capteurs(db)
 
 
 @router.get("/", response_model=list[CapteurOut])

@@ -8,6 +8,7 @@ class Settings(BaseSettings):
     access_token_expire_minutes: int = 60
     frontend_url: str = "http://localhost:5173"
     frontend_url_prod: str = ""
+    simulator_api_key: str= ""
 
     model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8")
     
