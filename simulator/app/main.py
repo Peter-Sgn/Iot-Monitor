@@ -21,7 +21,7 @@ def envoyer_mesure(capteur_id: int, valeur: float) -> bool:
 
     try:
         response = requests.post(
-            f"{API_URL}/mesures", json=payload, headers=get_headers(), timeout=5
+            f"{API_URL}/mesures", json=payload, headers=get_headers(), timeout=20
         )
         response.raise_for_status()
         return True
