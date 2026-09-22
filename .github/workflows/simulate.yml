@@ -2,7 +2,7 @@ name: Simulateur IoT
 
 on:
   schedule:
-    - cron: '*/4 * * * *'
+    - cron: '0 * * * *'
   workflow_dispatch:
 
 jobs:
@@ -13,16 +13,17 @@ jobs:
 
       - uses: actions/setup-python@v5
         with:
-          python-version: '3.14.4'
+          python-version: '3.12'
 
       - name: Installe les dependances
         working-directory: simulator
         run: pip install -r requirements.txt
 
-      - name: Lance un cycle du simulateur
+      - name: Lance plusieurs cycles du simulateur
         working-directory: simulator
         env:
           API_URL: ${{ secrets.SIMULATOR_API_URL }}
           SIMULATOR_API_KEY: ${{ secrets.SIMULATOR_API_KEY }}
-          RUN_ONCE: "true"
+          NB_CYCLES: "20"
+          INTERVALLE_SECONDES: "30"
         run: python -m app.main
