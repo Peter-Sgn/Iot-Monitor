@@ -1,3 +1,4 @@
+import os
 import random
 import time
 from datetime import datetime
@@ -10,18 +11,15 @@ from app.plages_par_type import get_plage
 
 
 def generer_valeur(type_capteur: str) -> float:
-    """Genere une valeur simulee plausible selon le type du capteur."""
     valeur_min, valeur_max = get_plage(type_capteur)
     return round(random.uniform(valeur_min, valeur_max), 2)
 
 
 def envoyer_mesure(capteur_id: int, valeur: float) -> bool:
-    """Envoie une mesure au backend via POST /mesures. Renvoie True si l'envoi a reussi."""
     payload = {"valeur": valeur, "capteur_id": capteur_id}
-
     try:
         response = requests.post(
-            f"{API_URL}/mesures", json=payload, headers=get_headers(), timeout=20
+            f"{API_URL}/mesures", json=payload, headers=get_headers(), timeout=15
         )
         response.raise_for_status()
         return True
@@ -31,7 +29,6 @@ def envoyer_mesure(capteur_id: int, valeur: float) -> bool:
 
 
 def cycle():
-    """Un cycle : decouvre les capteurs actuels, envoie une mesure pour chacun."""
     try:
         capteurs = get_capteurs()
     except requests.exceptions.RequestException as erreur:
@@ -39,7 +36,7 @@ def cycle():
         return
 
     if not capteurs:
-        print(f"[{datetime.now()}] Aucun capteur trouve pour ce compte.")
+        print(f"[{datetime.now()}] Aucun capteur trouve.")
         return
 
     for capteur in capteurs:
@@ -50,6 +47,13 @@ def cycle():
 
 
 def main():
+    run_once = os.getenv("RUN_ONCE", "false").lower() == "true"
+
+    if run_once:
+        print(f"[{datetime.now()}] Execution unique (mode GitHub Actions).")
+        cycle()
+        return
+
     print(f"Simulateur multi-capteurs demarre — cycle toutes les {INTERVALLE_SECONDES}s")
     print(f"Cible : {API_URL}")
     print("Ctrl+C pour arreter.\n")
