@@ -30,6 +30,12 @@ export default function CapteurFormModal({ capteur, onClose, onSubmit }) {
     setIsSubmitting(false)
   }
 
+  const UNITES_PAR_TYPE = {
+  temperature: ['°C'],
+  humidite: ['%'],
+  luminosite: ['lux'],
+}
+
   return (
     <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 px-4">
       <div className="bg-card-light dark:bg-card-dark rounded-xl p-6 w-full max-w-md">
@@ -70,14 +76,15 @@ export default function CapteurFormModal({ capteur, onClose, onSubmit }) {
             <label className="block text-sm text-text-light-secondary dark:text-text-dark-secondary mb-1">
               Unité
             </label>
-            <input
-              type="text"
+            <select
               value={unite}
               onChange={(e) => setUnite(e.target.value)}
-              placeholder="°C, %, lux..."
-              required
-              className="w-full px-3 py-2 rounded-lg border border-border-light dark:border-border-dark bg-transparent text-text-light-primary dark:text-text-dark-primary text-sm"
-            />
+            >
+              <option value="">Aucune</option>
+              {UNITES_PAR_TYPE[type].map((u) => (
+                <option key={u} value={u}>{u}</option>
+              ))}
+            </select>
           </div>
 
           <div>
