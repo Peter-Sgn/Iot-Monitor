@@ -1,9 +1,9 @@
 import unicodedata
 
 PLAGES_PAR_TYPE = {
-    "temperature": (15, 30),
+    "temperature": (17, 32),
     "humidite": (30, 80),
-    "luminosite": (0, 1000),
+    "luminosite": (500, 900),
 }
 
 PLAGE_PAR_DEFAUT = (0, 100)
