@@ -86,7 +86,6 @@ export default function CapteurFormModal({ capteur, onClose, onSubmit }) {
               ))}
             </select>
           </div>
-
           <div>
             <label className="block text-sm text-text-light-secondary dark:text-text-dark-secondary mb-1">
               Emplacement

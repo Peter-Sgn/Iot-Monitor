@@ -24,6 +24,6 @@ jobs:
         env:
           API_URL: ${{ secrets.SIMULATOR_API_URL }}
           SIMULATOR_API_KEY: ${{ secrets.SIMULATOR_API_KEY }}
-          NB_CYCLES: "20"
-          INTERVALLE_SECONDES: "30"
+          NB_CYCLES: "10"
+          INTERVALLE_SECONDES: "60"
         run: python -m app.main
