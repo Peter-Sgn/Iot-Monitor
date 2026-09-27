@@ -1,5 +1,6 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
+from app.services.simulator_service import simuler_mesures_pour_capteurs
 
 from app.core.dependencies import get_db
 from app.core.security import get_current_user
@@ -9,6 +10,16 @@ from app.services.mesure_service import get_mesures_historique
 from app.services.alertes_service import verifier_alerte
 
 router = APIRouter(prefix="/dashboard", tags=["dashboard"])
+
+@router.post("/simulate")
+def simulate_dashboard(
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    """Genere des mesures fraiches pour les capteurs de l'utilisateur, si besoin."""
+    capteurs = get_capteurs_by_user(db, current_user.id)
+    nb_generees = simuler_mesures_pour_capteurs(db, capteurs)
+    return {"mesures_generees": nb_generees}
 
 
 @router.get("/resume")

@@ -34,6 +34,7 @@ export default function CapteurDetailPage() {
   }
 
   const fetchMesures = async () => {
+    await simulerMesures()
     const data = await getMesuresHistorique(capteurId, periode.heures)
     setMesures(data)
   }

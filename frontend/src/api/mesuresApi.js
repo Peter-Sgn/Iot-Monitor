@@ -11,3 +11,8 @@ export const getDashboardResume = async () => {
   const response = await axiosClient.get('/dashboard/resume')
   return response.data
 }
+
+export const simulerMesures = async () => {
+  const response = await axiosClient.post('/dashboard/simulate')
+  return response.data
+}

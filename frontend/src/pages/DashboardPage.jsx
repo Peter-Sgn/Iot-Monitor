@@ -58,6 +58,7 @@ export default function DashboardPage() {
   useEffect(() => {
     const fetchResume = async () => {
       try {
+        await simulerMesures() // Simulate fresh measurements for the user's sensors
         const data = await getDashboardResume()
         setCapteurs(data)
         setSelectedCapteurId((current) => current ?? (data.length > 0 ? data[0].capteur_id : null))
