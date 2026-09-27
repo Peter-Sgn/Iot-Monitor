@@ -31,11 +31,18 @@ export default function AuthPage() {
     event.preventDefault()
     setLoginError(null)
     setLoginSubmitting(true)
+
     try {
       await login(loginEmail, loginPassword)
       navigate('/dashboard')
     } catch (err) {
-      setLoginError('Email ou mot de passe incorrect.')
+      if (err.response?.status === 401) {
+        setLoginError('Email ou mot de passe incorrect.')
+      } else if (err.response) {
+        setLoginError('Le serveur rencontre un probleme temporaire. Reessaie dans quelques instants.')
+      } else {
+        setLoginError('Impossible de contacter le serveur. Verifie ta connexion.')
+      }
     } finally {
       setLoginSubmitting(false)
     }
